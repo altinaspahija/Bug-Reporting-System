@@ -77,9 +77,14 @@ export class BugsListComponent implements OnInit {
         this.filterPropertyArray.splice(this.findIndexInArray('title'), 1)
         this.fitlerValueArray.splice(this.findIndexInArray('title'), 1)
       }
+         if(this.filterPropertyArray[0]){
       this.bugService.advancedSearchBug(this.filterPropertyArray, this.fitlerValueArray).subscribe(data => {
         this.bug = data;
       })
+      }
+      else{
+        this.getBugs()
+      }
 
     });
 
@@ -98,9 +103,14 @@ export class BugsListComponent implements OnInit {
         this.filterPropertyArray.splice(this.findIndexInArray('status'), 1)
         this.fitlerValueArray.splice(this.findIndexInArray('status'), 1)
       }
+      if(this.filterPropertyArray[0]){
       this.bugService.advancedSearchBug(this.filterPropertyArray, this.fitlerValueArray).subscribe(data => {
         this.bug = data;
       })
+      }
+      else{
+        this.getBugs()
+      }
 
     });
 
@@ -119,9 +129,14 @@ export class BugsListComponent implements OnInit {
         this.filterPropertyArray.splice(this.findIndexInArray('priority'), 1)
         this.fitlerValueArray.splice(this.findIndexInArray('priority'), 1)
       }
+      if(this.filterPropertyArray[0]){
       this.bugService.advancedSearchBug(this.filterPropertyArray, this.fitlerValueArray).subscribe(data => {
         this.bug = data;
       })
+      }
+      else{
+        this.getBugs()
+      }
     });
 
     this.myForm.get('filterReporter').valueChanges.subscribe(searchValue => {
@@ -140,9 +155,14 @@ export class BugsListComponent implements OnInit {
         this.filterPropertyArray.splice(this.findIndexInArray('reporter'), 1)
         this.fitlerValueArray.splice(this.findIndexInArray('reporter'), 1)
       }
+      if(this.filterPropertyArray[0]){
       this.bugService.advancedSearchBug(this.filterPropertyArray, this.fitlerValueArray).subscribe(data => {
         this.bug = data;
       })
+      }
+      else{
+        this.getBugs()
+      }
     });
 
   }
