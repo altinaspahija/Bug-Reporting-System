@@ -58,7 +58,7 @@ export class BugService {
   //Search bugs by adding selected options as parameters in baseUrl and calling that baseUrl API 
   advancedSearchBug(property, value): Observable<Bug> {
 
-    let searchUrl = this.baseUrl + "?";
+    let searchUrl = this.baseUrl + "?page=0&size=*&";
 
     for (let i = 0; i < property.length; i++) {
       if (i == 0) {
