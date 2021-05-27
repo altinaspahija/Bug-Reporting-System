@@ -1,0 +1,77 @@
+.container {
+  padding: 2rem 0rem;
+}
+
+// Table style
+.table {
+  thead,
+  td,
+  th,
+  tr {
+    vertical-align: middle;
+  }
+}
+
+//Table header style
+#table-header {
+  font-weight: lighter;
+  color: white;
+  text-transform: uppercase;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+}
+
+//Form labels style
+.label-input-type {
+  padding-left: 5px !important;
+  margin-bottom: 10px;
+}
+
+//Icons style
+.sort {
+  padding-right: 0px !important;
+}
+.fa {
+  color: white;
+}
+
+//Buttons style
+#toggle-button{
+  margin-bottom: 10px;
+}
+
+#clear-button{
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+#button-list-actions{
+  display: inline-block;
+  margin:10px;
+}
+
+//Input group style
+.input-group {
+  margin-bottom: 20px;
+}
+
+//Pagination style
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+#pagination-part{
+  margin-top: 20px;
+}
+
+// When screen is smaller than 1000px make font-size smaller and dont wrap them
+@media screen and (max-width: 1000px) {
+  #table-header {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  td {
+    font-size: 12px;
+  }
+}

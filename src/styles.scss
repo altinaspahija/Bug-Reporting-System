@@ -1,0 +1,10 @@
+/* Global style */
+$primary: #1C4FBF;
+$blue: #1C4FBF;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

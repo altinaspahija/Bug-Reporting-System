@@ -1,0 +1,128 @@
+<div>
+
+  <!-- formGroup is bounded to the form element to create communication between the model and the form -->
+  <!-- Submit event binded by ngSubmit that triggers function onSubmitUpdate() -->
+  <form [formGroup]="myForm" (ngSubmit)="onSubmitUpdate()">
+
+    <!-- Title input -->
+    <div class="form-group">
+      <label class="label-input-type" for="title">Title:</label>
+      <!-- Title form control name input binds title input to form control defined in FormGroup in the class of the component -->
+      <input formControlName="title" type="text" id="title" class="form-control">
+      <!-- Title input validation, show message if input is not filled and the form is submitted -->
+      <div class="error" *ngIf="myForm.get('title').invalid && submitted">Fill the title field</div>
+    </div>
+
+    <!-- Description input -->
+    <div class="form-group">
+      <label class="label-input-type" for="description">Description:</label>
+      <!-- Description form control name input description title input to form control defined in FormGroup in the class of the component -->
+      <input formControlName="description" type="text" class="form-control">
+      <!-- Description input validation, show message if input is not filled and the form is submitted  -->
+      <div class="error" *ngIf="myForm.get('description').invalid && submitted">Fill the description field</div>
+    </div>
+
+    <!-- Priority radio button options and bindings to each value property -->
+    <!-- Priority form control name radio buttons bind priority radio buttons to form control defined in FormGroup in the class of the component -->
+    <div class="form-group row">
+
+      <label class="label-input-type" for="priority">Priority:</label>
+
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" formControlName="priority" [value]="0" name="priority">
+        <label class="form-check-label" for="minor">Minor</label>
+      </div>
+
+      <div class="form-check form-check-inline" style="margin-top: 5px;">
+        <input type="radio" class="form-check-input" formControlName="priority" [value]="1" name="priority">
+        <label class="form-check-label" for="major">Major</label>
+      </div>
+
+      <div class="form-check form-check-inline" style="margin-top: 5px;">
+        <input type="radio" class="form-check-input" formControlName="priority" [value]="2" name="priority">
+        <label class="form-check-label" for="critical">Critical</label>
+
+        <!-- Priority radio buttons validation, show message if not any radio button is chosen and  the form is submitted  -->
+        <div class="error" *ngIf="myForm.get('priority').invalid && submitted">Choose the priority</div>
+      </div>
+    </div>
+
+    <!-- Reporter select options -->
+    <div class="form-group">
+      <label class="label-input-type">Reporter:</label>
+      <!-- Reporter form control name selector bind reporter selector to form control defined in FormGroup in the class of the component -->
+      <select class="form-select form-select-sm" formControlName="reporter">
+        <option value="" selected>Select reporter</option>
+        <!-- Display all reporters as options -->
+        <option *ngFor="let reporter of reporters">
+          {{reporter}}
+        </option>
+      </select>
+      <!-- Reporter select options validation, show message if not any option is chosen and the form is submitted  -->
+      <div class="error" *ngIf="myForm.get('reporter').invalid && submitted">Select the reporter</div>
+    </div>
+
+    <!-- Status select options -->
+    <div class="form-group">
+      <label class="label-input-type">Status:</label>
+      <!-- Status form control name selector bind status selector to form control defined in FormGroup in the class of the component -->
+      <select class="form-select form-select-sm" formControlName="status">
+        <option value="" selected>Select status</option>
+        <!-- Display all statuses as options -->
+        <option *ngFor="let status of statuses">
+          {{status}}
+        </option>
+      </select>
+      <!-- Status select options validation, show message if not any option is chosen and the form is submitted -->
+      <div class="error" *ngIf="myForm.get('status').invalid && submitted">Field is required
+      </div>
+    </div>
+
+    <!-- Created Date input  -->
+    <div class="form-group">
+      <label class="label-input-type" for="createdAtDate">Created Date:</label>
+      <!-- Created Date Value binding and pipe to format created date -->
+      <input id="createdAt" name="createdAt" [value]="bug.createdAt | date:'dd/MM/yy'" class="form-control" readonly />
+    </div>
+
+    <!-- Updated Date input  -->
+    <div class="form-group">
+      <label class="label-input-type" for="updatedAtDate">Updated Date:</label>
+      <!-- Updated Data Value binding and pipe to format updated date-->
+      <input id="updatedAt" name="updatedAt" [value]="bug.updatedAt | date:'dd/MM/yy'" class="form-control" readonly />
+    </div>
+
+    <!-- Comments section -->
+    <form>
+      <div class="form-group">
+        <!-- Display all created comments and access the index of each comment -->
+        <div *ngFor="let comment of bugComments;let i=index">
+          <!-- Indicate each comment using index -->
+          <label class="label-input-type" for="comment">Comment {{i+1}}:</label>
+          <!-- Using template driven forms and ngModel to bind the description of each comment, used template variable for validation  -->
+          <textarea type="text" required rows="3" [(ngModel)]="comment.description" name="description{{i}}"
+            class="form-control" #Comment="ngModel" placeholder="Write your comment here...">
+        </textarea>
+          <!-- Comment Validation, show message if input is not filled and the form is submitted -->
+          <div class="error" *ngIf="Comment.invalid && submitted"> Comment is invalid</div>
+          <!-- Delete any comment with click event which triggers function deleteComment() for a specific comment based on index 
+            which is defined in the class of the component-->
+          <button id="button-list-delete" type="button" class="btn btn-danger" (click)="deleteComment(i)"><i
+              class="fa fa-trash-o"></i>Delete this comment</button>
+        </div>
+        <!-- Add new comment with click event which triggers function addNewComment() which is defined in the class of the component-->
+        <button id="button-list-add" type="button" class="btn btn-primary" (click)="addNewComment()"><i
+            class="fa fa-plus"></i>Add new comment</button>
+      </div>
+    </form>
+
+    <div class="form-group">
+      <!-- Submit button -->
+      <button id="submit-button" class="btn btn-success" type="submit">Submit</button>
+      <!-- Back button which with click event triggers function list() which is defined in the class of the component -->
+      <button id="back-button" (click)="list()" class="btn btn-success">Back to Bugs</button>
+    </div>
+
+  </form>
+
+</div>

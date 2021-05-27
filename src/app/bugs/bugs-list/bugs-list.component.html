@@ -1,0 +1,161 @@
+<div class="container ">
+  <div class="row">
+
+    <!-- formGroup is bounded to the form element to create communication between the model and the form -->
+    <form [formGroup]="myForm">
+      <!-- Search input -->
+      <div class="input-group">
+        <!-- Search form control name input binds search input to form control defined in FormGroup in the class of the component -->
+        <input type="search" formControlName="search" class="form-control rounded" placeholder="Type to search by title"
+          aria-label="Search" aria-describedby="search-addon" />
+        <!-- Search icon -->
+        <button class="btn btn-outline-secondary disabled"><i class="fa fa-search" style="color: black;"
+            aria-hidden="true"></i></button>
+      </div>
+
+      <div class="col-12">
+        <!-- Collapse div of search inputs or not based on Extend or Hide filter button click -->
+        <div *ngIf="collapse">
+          <!-- Filter by priority -->
+          <label class="label-input-type">Choose priority:</label>
+          <!-- Priority form control name selector bind priority selector to form control defined in FormGroup in the class of the component -->
+          <select class="form-select form-select-sm" style="margin-bottom:20px" formControlName="filterPriority">
+            <option value="" selected>Select</option>
+            <!-- Display all priorities as options -->
+            <option *ngFor="let priority of priorityFilter">
+              {{priority}}
+            </option>
+          </select>
+
+          <!-- Filter by reporter -->
+          <label class="label-input-type">Choose reporter:</label>
+          <!-- Reporter form control name selector bind reporter selector to form control defined in FormGroup in the class of the component -->
+          <select class="form-select form-select-sm" style="margin-bottom:20px" formControlName="filterReporter">
+            <option value="" selected>Select</option>
+            <!-- Display all reporters as options -->
+            <option *ngFor="let reporter of reporterFilter">
+              {{reporter}}
+            </option>
+          </select>
+
+          <!-- Filter by status -->
+          <label class="label-input-type">Choose status:</label>
+          <!-- Status form control name selector bind status selector to form control defined in FormGroup in the class of the component -->
+          <select class="form-select form-select-sm" style="margin-bottom:20px" formControlName="filterStatus">
+            <option value="" selected>Select</option>
+            <!-- Display all statuses as options -->
+            <option *ngFor="let status of statusFilter">
+              {{status}}
+            </option>
+          </select>
+        </div>
+        <!-- If Extend filters button is clicked name of it will change to Hide filters button -->
+        <!-- If any filter value is added in filterValueArray then Clear filters button will be shown and clicking on it will clear filter (values) in search areas, this function is defined in the class of the component-->
+        <button type="button" class="btn btn-primary" id="toggle-button" (click)="collapse=!collapse">{{collapse ? 'Hide
+          filters':'Extend filters'}}</button>
+        <button *ngIf="fitlerValueArray[0]" type="button" class="btn btn-primary" id="clear-button"
+          (click)="clearFilters()">Clear filters</button>
+      </div>
+    </form>
+
+    <!-- Table section start filled with data of bugs-->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+
+        <thead class="bg-primary">
+          <tr>
+            <!-- For each sort item in header attached to Properties, ngClass directive is used to change css class button based on clicking the sort icon (ascending and descending)
+              click event in sort button triggers sortBug() function that is defined in the class of the component !-->
+            <th id="table-header" scope="col">
+              <button class="btn sort" [ngClass]="{'btn-asc': !sortClicked[0], 'btn-desc': sortClicked[0]}"
+                (click)="sortClicked[0] = !sortClicked[0]; sortBug('title',0);">
+                <i class="fa"
+                  [ngClass]="{'fa-sort-amount-asc': !sortClicked[0], 'fa-sort-amount-desc': sortClicked[0]}"></i>
+              </button>
+              Title
+            </th>
+            <th id="table-header" scope="col">
+              <button class="btn sort" [ngClass]="{'btn-asc': !sortClicked[1], 'btn-desc': sortClicked[1]}"
+                (click)="sortClicked[1] = !sortClicked[1]; sortBug('priority',1);">
+                <i class="fa"
+                  [ngClass]="{'fa-sort-amount-asc': !sortClicked[1], 'fa-sort-amount-desc': sortClicked[1]}"></i>
+              </button>
+              Priority
+            </th>
+            <th id="table-header" scope="col">
+              <button class="btn sort" [ngClass]="{'btn-asc': !sortClicked[2], 'btn-desc': sortClicked[2]}"
+                (click)="sortClicked[2] = !sortClicked[2]; sortBug('reporter',2);">
+                <i class="fa"
+                  [ngClass]="{'fa-sort-amount-asc': !sortClicked[2], 'fa-sort-amount-desc': sortClicked[2]}"></i>
+              </button>
+              Reporter
+            </th>
+            <th id="table-header" scope="col">
+              <button class="btn sort" [ngClass]="{'btn-asc': !sortClicked[3], 'btn-desc': sortClicked[3]}"
+                (click)="sortClicked[3] = !sortClicked[3]; sortBug('createdAt',3);">
+                <i class="fa"
+                  [ngClass]="{'fa-sort-amount-asc': !sortClicked[3], 'fa-sort-amount-desc': sortClicked[3]}"></i>
+              </button>
+              Created
+            </th>
+            <th id="table-header" scope="col">
+              <button class="btn sort" [ngClass]="{'btn-asc': !sortClicked[4], 'btn-desc': sortClicked[4]}"
+                (click)="sortClicked[4] = !sortClicked[4]; sortBug('status',4);">
+                <i class="fa"
+                  [ngClass]="{'fa-sort-amount-asc': !sortClicked[4], 'fa-sort-amount-desc': sortClicked[4]}"></i>
+              </button>
+              Status
+            </th>
+            <th id="table-header" scope="col">
+              Actions
+            </th>
+          </tr>
+        </thead>
+
+        <!-- Display all bugs and their data in body of the table, by using interpolation -->
+        <tbody>
+          <tr *ngFor="let bug of bug">
+            <td scope="row">{{ bug.title }}</td>
+            <td scope="row">{{ checkPriority(bug.priority)}}</td>
+            <td scope="row">{{ bug.reporter }}</td>
+            <td scope="row">{{ bug.createdAt | date:"dd/MM/yy"}}</td>
+            <td scope="row">{{ bug.status }}</td>
+            <!-- Icons to update and delete bug -->
+            <td>
+              <!-- Update bug button on which click event triggers updateBug() function for specific bug based on id that is defined in class of the component -->
+              <button id="button-list-actions" type="button" class="btn btn-success" (click)="updateBug(bug.id)"><i
+                  class="fa fa-pencil fa-lg"></i></button>
+              <!-- Delete bug button on which click event triggers deleteBug() function for specific bug based on id that is defined in class of the component -->
+              <button id="button-list-actions" type="button" class="btn btn-danger" (click)="deleteBug(bug.id)"><i
+                  class="fa fa-trash-o fa-lg"></i></button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+      <!-- Table section filled with data of bugs end-->
+    </div>
+
+    <!-- Pagination section -->
+    <nav aria-label="..." class="table-responsive" id="pagination-part">
+      <ul class="pagination no-wrap">
+        <!-- Disable clicking Previous when Page is the first page or disable when you search or when you filter -->
+        <li class="page-item" [class.disabled]="actualPage === 0 || searchValue || fitlerValueArray[0]">
+          <a class="page-link" (click)="selectPage(actualPage-1)">Previous</a>
+        </li>
+        <!-- Separate equal bugs for each page based on total number of bugs, disable clicking pages when you search or when you filter -->
+        <div *ngFor="let page of dataPerPage; let i=index">
+          <li class="page-item" [class.active]="actualPage === i" [class.disabled]="searchValue || fitlerValueArray[0]">
+            <a class="page-link" (click)="selectPage(i)">{{i+1}}</a>
+          </li>
+        </div>
+        <!-- Disable clicking Next when Page is the last page or disable when you search or when you filter -->
+        <li class="page-item"
+          [class.disabled]="actualPage === this.numberPage-1 || searchValue || fitlerValueArray[0] ">
+          <a class="page-link" (click)="selectPage(actualPage+1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+</div>

@@ -1,0 +1,19 @@
+//Title style
+.main-header {
+  text-align: center;
+  text-transform: uppercase;
+  color: #1c4fbf;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+//Card style
+.card {
+  -webkit-box-shadow: 10px 10px 22px 2px rgba(173, 173, 173, 1);
+  -moz-box-shadow: 10px 10px 22px 2px rgba(173, 173, 173, 1);
+  box-shadow: 10px 10px 22px 2px rgba(173, 173, 173, 1);
+}
+
+//Container style
+.container {
+  padding-bottom: 50px !important;
+}

@@ -1,0 +1,47 @@
+<div>
+  <!-- Navigation bar  -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" style="padding-left: 25px; font-size: 1.5rem;" href="#">
+      ATH TECH
+    </a>
+
+    <!-- On click button show and hide nav -->
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- ngClass directive used to change div showing navbar or not-->
+    <div class="collapse navbar-collapse" style="padding-left: 25px;" [ngClass]="{ 'show': navbarOpen }">
+
+      <!-- Navigation items -->
+      <ul class="navbar-nav mr-auto">
+
+        <!-- routerLink used to make navigation item a link that initiates navigation to a route and 
+          routerLinkActive directive used to to highlight which route is currently active -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/bugs" routerLinkActive="active">Bug List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/addBug" routerLinkActive="active">Report Bug</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content after navigation -->
+  <div class="container">
+    <br>
+    <!-- Title -->
+    <h2 class="main-header">Bug Reporting System</h2>
+    <hr>
+    <!-- Content -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Load different components dynamically based on the activated component or current route state -->
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+</div>

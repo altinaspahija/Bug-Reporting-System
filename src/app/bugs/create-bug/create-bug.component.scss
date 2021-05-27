@@ -1,0 +1,50 @@
+//Form input group style
+.form-group {
+    margin: 30px;
+}
+
+//Form labels style
+.label-input-type {
+    padding-left: 0px !important;
+    margin-bottom: 10px;
+}
+
+// Validation notification style
+.error {
+    color: #cc2525;
+    font-size: 13px;
+    padding-left: 0px !important;
+}
+
+// Buttons style
+#submit-button {
+    float: right;
+}
+
+#button-list {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#button-list-delete {
+    display: block;
+    width: 13rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    .fa {
+        padding: 5px;
+    }
+}
+
+#button-list-add {
+    display: block;
+    width: 13rem;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+    .fa {
+        padding: 5px;
+    }
+}
+
